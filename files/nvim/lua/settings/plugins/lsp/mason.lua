@@ -31,7 +31,7 @@ return {
 				"prismals",
 				"bashls",
 				"pyright",
-				"ruff",
+				-- "ruff",
 				-- "nil_ls",
 				-- "zls",
 			},
@@ -44,11 +44,12 @@ return {
 			ensure_installed = {
 				"prettier", -- ts/js formatter
 				"stylua", -- lua formatter
-				"eslint_d", -- ts/js linter
+				-- "eslint", -- ts/js linter
 				"black",
 				"ruff",
-				"shellcheck",
-				"beautysh",
+				-- "shellcheck",
+				-- "beautysh",
+				"shfmt",
 			},
 			-- auto-install configured servers (with lspconfig)
 			automatic_installation = { exclude = { "rustfmt" } },

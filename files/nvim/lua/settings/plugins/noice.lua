@@ -30,6 +30,25 @@ return {
 				inc_rename = false, -- enables an input dialog for inc-rename.nvim
 				lsp_doc_border = false, -- add a border to hover docs and signature help
 			},
+			routes = {
+				{
+					view = "notify",
+					filter = {
+						event = "msg_showmode",
+						any = {
+							{ find = "recording" },
+						},
+					},
+				},
+			},
+		})
+		local macro_group = vim.api.nvim_create_augroup("MacroRecording", { clear = true })
+		vim.api.nvim_create_autocmd("RecordingLeave", {
+			group = macro_group,
+			callback = function()
+				-- Display a message when macro recording stops
+				print("Macro recording stopped")
+			end,
 		})
 	end,
 }

@@ -1,5 +1,5 @@
 return {
-	"jose-elias-alvarez/null-ls.nvim", -- configure formatters & linters
+	"nvimtools/none-ls.nvim", -- none-ls is null-ls from community
 	event = { "BufReadPre", "BufNewFile" },
 	config = function()
 		-- import null-ls plugin
@@ -13,21 +13,6 @@ return {
 
 		-- to setup format on save
 		local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-		local rustfmt_setting = {}
-
-		local util = require("lspconfig/util")
-		local cargo_path = util.root_pattern("Cargo.toml")(vim.fn.getcwd())
-		if cargo_path then
-			local leptos_path = util.root_pattern("leptosfmt.toml")(vim.fn.getcwd())
-			if leptos_path then
-				rustfmt_setting.command = "leptosfmt"
-				rustfmt_setting.extra_args = { "-m", "80" }
-			else
-				rustfmt_setting.extra_args = { "--config", "max_width=80" }
-			end
-		end
-
-		-- print("Rustfmt table" .. vim.inspect(rustfmt_setting))
 
 		-- configure null_ls
 		null_ls.setup({
@@ -45,25 +30,27 @@ return {
 				--  to disable file types use
 				--  "formatting.prettier.with({disabled_filetypes: {}})" (see null-ls docs)
 				-- Python
-				formatting.ruff.with({
-					command = "ruff",
-					extra_args = { "format", "--line-length", "80", "." },
-				}),
+				-- formatting.ruff.with({
+				-- 	extra_args = { "format", "--line-length", "80", "." },
+				-- }),
+				formatting.black,
 				formatting.clang_format,
-				formatting.rustfmt.with(rustfmt_setting),
+				-- formatting.rustfmt.with({ extra_args = { "--config", "max_width=80" } }),
+				formatting.leptosfmt.with({ extra_args = { "--rustfmt" } }),
 
-				diagnostics.shellcheck,
-				formatting.beautysh,
+				-- diagnostics.shellcheck,
+				-- formatting.beautysh,
+				formatting.shfmt,
 				formatting.prettier.with({
 					extra_filetypes = { "svelte" },
 				}), -- js/ts formatter
 				formatting.stylua, -- lua formatter
-				diagnostics.eslint_d.with({
-					-- js/ts linter
-					condition = function(utils)
-						return utils.root_has_file({ ".eslintrc.js", ".eslintrc.cjs" }) -- only enable if root has .eslintrc.js or .eslintrc.cjs
-					end,
-				}),
+				-- diagnostics.eslint_d.with({
+				-- 	-- js/ts linter
+				-- 	condition = function(utils)
+				-- 		return utils.root_has_file({ ".eslintrc.js", ".eslintrc.cjs" }) -- only enable if root has .eslintrc.js or .eslintrc.cjs
+				-- 	end,
+				-- }),
 			},
 			-- configure format on save
 			on_attach = function(current_client, bufnr)
