@@ -5,26 +5,16 @@ return {
 		-- import null-ls plugin
 		local null_ls = require("null-ls")
 
-		local null_ls_utils = require("null-ls.utils")
-
 		-- for conciseness
 		local formatting = null_ls.builtins.formatting -- to setup formatters
 		local diagnostics = null_ls.builtins.diagnostics -- to setup linters
+		local helper = require("null-ls.helpers")
 
 		-- to setup format on save
 		local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 		-- configure null_ls
 		null_ls.setup({
-			-- add package.json as identifier for root (for typescript monorepos)
-			root_dir = null_ls_utils.root_pattern(
-				".null-ls-root",
-				"Makefile",
-				".git",
-				"package.json",
-				"Cargo.toml",
-				"requirements.txt"
-			),
 			-- setup formatters & linters
 			sources = {
 				--  to disable file types use
@@ -36,14 +26,15 @@ return {
 				formatting.black,
 				formatting.clang_format,
 				-- formatting.rustfmt.with({ extra_args = { "--config", "max_width=80" } }),
-				formatting.leptosfmt.with({ extra_args = { "--rustfmt" } }),
+				formatting.leptosfmt.with({ extra_args = { "-r" } }),
 
 				-- diagnostics.shellcheck,
 				-- formatting.beautysh,
 				formatting.shfmt,
 				formatting.prettier.with({
 					extra_filetypes = { "svelte" },
-				}), -- js/ts formatter
+				}),
+				-- js/ts formatter
 				formatting.stylua, -- lua formatter
 				-- diagnostics.eslint_d.with({
 				-- 	-- js/ts linter
@@ -66,7 +57,7 @@ return {
 									return client.name == "null-ls"
 								end,
 								bufnr = bufnr,
-								timeout_ms = 5000,
+								timeout_ms = 10000,
 							})
 						end,
 					})

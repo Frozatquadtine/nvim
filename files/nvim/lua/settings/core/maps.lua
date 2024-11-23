@@ -10,6 +10,7 @@ keymap.set("n", "<C-w><left>", "<C-w><")
 keymap.set("n", "<C-w><right>", "<C-w>>")
 keymap.set("n", "<C-w><up>", "<C-w>+")
 keymap.set("n", "<C-w><down>", "<C-w>-")
+keymap.set("n", "<C-left>", "<C-w><")
 
 -- move in insert mode
 keymap.set("i", "<C-h>", "<Left>")
@@ -39,9 +40,9 @@ keymap.set("v", "d", '"_d')
 keymap.set("n", "<ESC>", "<cmd> noh <CR>")
 
 -- RUN PYTHON
-keymap.set("n", "<F5>", function()
-	require("nvterm.terminal").send("python " .. vim.fn.expand("%"))
-end)
+-- keymap.set("n", "<F5>", function()
+-- 	require("nvterm.terminal").send("python " .. vim.fn.expand("%"))
+-- end)
 
 -- Select all
 keymap.set("n", "<C-a>", "gg<S-v>G")
