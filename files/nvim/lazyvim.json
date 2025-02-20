@@ -1,0 +1,13 @@
+{
+  "extras": [
+    "lazyvim.plugins.extras.coding.mini-snippets",
+    "lazyvim.plugins.extras.lang.toml",
+    "lazyvim.plugins.extras.ui.indent-blankline"
+  ],
+  "install_version": 8,
+  "news": {
+    "NEWS.md": "10960",
+    "doc/news.txt": "24450"
+  },
+  "version": 8
+}
