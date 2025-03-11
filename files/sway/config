@@ -2,7 +2,7 @@
 # Config for sway
 #
 # Read `man 5 sway` for a complete reference.
-exec dbus-update-activation-environment DISPLAY SWAYSOCK WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+exec dbus-update-activation-environment DISPLAY SWAYSOCK WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway QT_QPA_PLATFORM 
 # user config directory
 include $HOME/.config/sway/config.d/*
 
@@ -10,7 +10,7 @@ include $HOME/.config/sway/config.d/*
 # xwayland disable
 
 # Set the background image
-output * bg /home/vaz/.config/sway/backgrounds/ui9f1ohhs3681.jpg fill
+output * bg /home/vaz/.config/sway/backgrounds/b9bfca6e77ded6c0913154303c48c8d9.jpg fill
 
 
 # Status Bar:

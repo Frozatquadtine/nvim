@@ -7,7 +7,7 @@
     "margin": "0 0 0 0",
     "modules-left": ["custom/screenrecorder", "pulseaudio#source", "wireplumber", "group/light", "tray"],
     "modules-center": ["sway/workspaces"],
-    "modules-right": ["sway/language", "idle_inhibitor", "battery", "custom/blockheight", "clock"], 
+    "modules-right": ["sway/language", "idle_inhibitor", "battery", "custom/blockheight", "clock", "custom/notification"], 
     
  
     "sway/workspaces": { 
@@ -162,6 +162,26 @@
         "on-click": "$HOME/.config/waybar/waybar-screenrecorder/screenrecorder toggle fullscreen",
         "on-click-right": "$HOME/.config/waybar/waybar-screenrecorder/screenrecorder toggle region"
     },
+    "custom/notification": {
+        "tooltip": false,
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "<span foreground='red'><sup></sup></span>",
+            "none": "",
+            "dnd-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-none": "",
+            "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "inhibited-none": "",
+            "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-inhibited-none": ""
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
+    },
 },
 {
     "layer": "top", // Waybar at top layer
@@ -171,7 +191,7 @@
     "margin": "0 0 0 0",
     "modules-left": ["custom/screenrecorder", "pulseaudio#source", "wireplumber", "group/light", "tray"],
     "modules-center": ["sway/workspaces"],
-    "modules-right": ["sway/language", "idle_inhibitor", "battery", "custom/blockheight", "clock"], 
+    "modules-right": ["sway/language", "idle_inhibitor", "battery", "custom/blockheight", "clock", "custom/notification"], 
     
  
     "sway/workspaces": { 
@@ -322,6 +342,26 @@
         "format": "{}",
         "on-click": "$HOME/.config/waybar/waybar-screenrecorder/screenrecorder toggle fullscreen",
         "on-click-right": "$HOME/.config/waybar/waybar-screenrecorder/screenrecorder toggle region"
+    },
+    "custom/notification": {
+        "tooltip": false,
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "<span foreground='red'><sup></sup></span>",
+            "none": "",
+            "dnd-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-none": "",
+            "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "inhibited-none": "",
+            "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-inhibited-none": ""
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
     },
   }
 ]

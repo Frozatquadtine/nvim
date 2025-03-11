@@ -157,6 +157,7 @@ alias fvi="nvim \$(fzf --preview='cat {}')"
 # Dotfiles & Files
 alias gc="git clone"
 alias reboot="loginctl reboot"
+alias wttr="curl wttr.in"
 
 # Cleanup orphaned packages
 alias cleanup='sudo xbps-remove -Oo'

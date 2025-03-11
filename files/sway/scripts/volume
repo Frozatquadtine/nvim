@@ -9,80 +9,80 @@ notify_cmd='notify-send -h string:x-canonical-private-synchronous:sys-notify-vol
 
 # Get Volume
 get_volume() {
-    printf "%'.0f\n" "$(echo "$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | cut -d' ' -f2) *100" | bc -l)"
+	printf "%'.0f\n" "$(echo "$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | cut -d' ' -f2) *100" | bc -l)"
 }
 
 # Get icons
 get_icon() {
-    current="$(get_volume)"
-    if [[ "$current" -eq "0" ]]; then
-        icon="$iDIR/volume-mute.svg"
-    elif [[ ("$current" -ge "0") && ("$current" -le "30") ]]; then
-        icon="$iDIR/volume-low.svg"
-    elif [[ ("$current" -ge "30") && ("$current" -le "60") ]]; then
-        icon="$iDIR/volume-mid.svg"
-    elif [[ ("$current" -ge "60") && ("$current" -le "100") ]]; then
-        icon="$iDIR/volume-high.svg"
-    fi
+	current="$(get_volume)"
+	if [[ "$current" -eq "0" ]]; then
+		icon="$iDIR/volume-mute.svg"
+	elif [[ ("$current" -ge "0") && ("$current" -le "30") ]]; then
+		icon="$iDIR/volume-low.svg"
+	elif [[ ("$current" -ge "30") && ("$current" -le "60") ]]; then
+		icon="$iDIR/volume-mid.svg"
+	elif [[ ("$current" -ge "60") ]]; then
+		icon="$iDIR/volume-high.svg"
+	fi
 }
 
 # Notify
 notify_user() {
-    ${notify_cmd} -i "$icon" "Volume : $(get_volume)%"
+	${notify_cmd} -i "$icon" "Volume : $(get_volume)%"
 }
 
 # Increase Volume
 inc_volume() {
-    ISMUTED="$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep MUTED)"
-    if [[ -n $ISMUTED ]]; then
-        wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-    fi 
-    wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+ && get_icon && notify_user 
+	ISMUTED="$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep MUTED)"
+	if [[ -n $ISMUTED ]]; then
+		wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+	fi
+	wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%+ && get_icon && notify_user
 }
 
 # Decrease Volume
 dec_volume() {
-    ISMUTED="$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep MUTED)"
-    if [[ -n $ISMUTED ]]; then
-        wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-    fi 
-    wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%- && get_icon && notify_user
+	ISMUTED="$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep MUTED)"
+	if [[ -n $ISMUTED ]]; then
+		wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+	fi
+	wpctl set-volume @DEFAULT_AUDIO_SINK@ 2%- && get_icon && notify_user
 }
 
 # Toggle Mute
 toggle_mute() {
-    if [[ -n $(wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep MUTED) ]]; then
-        wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && ${notify_cmd} -i "$iDIR/volume-mute.svg" "Mute"
-    else
-        wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && get_icon && ${notify_cmd} -i "$icon" "Unmute"
-    fi
+	if [[ -n $(wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep MUTED) ]]; then
+		wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && ${notify_cmd} -i "$iDIR/volume-mute.svg" "Mute"
+	else
+		wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && get_icon && ${notify_cmd} -i "$icon" "Unmute"
+	fi
 }
 
 # Toggle Mic
 toggle_mic() {
-    ID="$(wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | grep MUTED)"
-    if [[ -n $ID ]]; then
-        wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle && ${notify_cmd} -i "$iDIR/microphone.svg" "Microphone Switched ON" && echo 1 > /sys/class/leds/platform::micmute/brightness
-    else
-        wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle && ${notify_cmd} -i "$iDIR/microphone-mute.svg" "Microphone Switched OFF" && echo 0 > /sys/class/leds/platform::micmute/brightness
-    fi
+	ID="$(wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | grep MUTED)"
+	if [[ -n $ID ]]; then
+		wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle && ${notify_cmd} -i "$iDIR/microphone.svg" "Microphone Switched ON" && echo 1 >/sys/class/leds/platform::micmute/brightness
+	else
+		wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle && ${notify_cmd} -i "$iDIR/microphone-mute.svg" "Microphone Switched OFF" && echo 0 >/sys/class/leds/platform::micmute/brightness
+	fi
 }
 
 # Execute accordingly
 if [[ -x $(which wpctl) ]]; then
-    if [[ "$1" == "--get" ]]; then
-        get_volume
-    elif [[ "$1" == "--inc" ]]; then
-        inc_volume
-    elif [[ "$1" == "--dec" ]]; then
-        dec_volume
-    elif [[ "$1" == "--toggle" ]]; then
-        toggle_mute
-    elif [[ "$1" == "--toggle-mic" ]]; then
-        toggle_mic
-    else
-        echo "$(get_volume)"%
-    fi
+	if [[ "$1" == "--get" ]]; then
+		get_volume
+	elif [[ "$1" == "--inc" ]]; then
+		inc_volume
+	elif [[ "$1" == "--dec" ]]; then
+		dec_volume
+	elif [[ "$1" == "--toggle" ]]; then
+		toggle_mute
+	elif [[ "$1" == "--toggle-mic" ]]; then
+		toggle_mic
+	else
+		echo "$(get_volume)"%
+	fi
 else
-    ${notify_cmd} "'WirePlumber' is not installed."
+	${notify_cmd} "'WirePlumber' is not installed."
 fi

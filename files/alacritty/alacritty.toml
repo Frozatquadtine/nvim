@@ -1,11 +1,11 @@
-import = [
-    "~/.config/alacritty/themes/themes/catppuccin_mocha.toml"
-]
+# import = [
+#     "~/.config/alacritty/themes/themes/catppuccin_mocha.toml"
+# ]
 
 # live_config_reload = true
 
 [font]
-size = 11.25
+size = 12
 
 [font.bold]
 family = "ComicShannsMono Nerd Font Mono"
@@ -28,13 +28,13 @@ action = "ToggleViMode"
 key = "Return"
 mods = "Control|Shift"
 
-[shell]
-program = "/bin/fish"
+[terminal]
+shell = "/bin/fish"
 
 [ env ]
 TERM = "xterm-256color"
 
 [window]
 padding.x = 0
-padding.y = 0
+padding.y = 5
 

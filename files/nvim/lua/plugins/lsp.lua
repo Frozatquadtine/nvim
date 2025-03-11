@@ -21,7 +21,6 @@ return {
   -- lsp servers
   {
     "neovim/nvim-lspconfig",
-    -- dependencies = { "saghen/blink.cmp" },
     opts = {
       inlay_hints = { enabled = false },
       ---@type lspconfig.options
@@ -30,7 +29,7 @@ return {
         vtsls = { enabled = false },
         tailwindcss = {
           root_dir = function(...)
-            return require("lspconfig.util").root_pattern(".git")(...)
+            return require("lspconfig.util").root_pattern("tailwind.config.js")(...)
           end,
           -- exclude a filetype from the default_config
           filetypes_exclude = { "markdown" },
@@ -82,6 +81,7 @@ return {
           },
         },
         html = {},
+        gradle_ls = {},
         yamlls = {
           settings = {
             yaml = {

@@ -25,7 +25,7 @@ vim.opt.numberwidth = 5
 -- Case insensitive searching UNLESS /C or capital in search
 vim.opt.ignorecase = true
 -- wrap lines
-vim.opt.wrap = false
+vim.opt.wrap = true
 vim.opt.backspace = { "start", "eol", "indent" }
 vim.opt.path:append({ "**" }) -- Finding files - Search down into subfolders
 vim.opt.wildignore:append({ "*/node_modules/*", "*/__pycache__/*", "*/env/*" })

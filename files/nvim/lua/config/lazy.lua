@@ -31,7 +31,7 @@ require("lazy").setup({
     },
     -- { import = "lazyvim.plugins.extras.coding.luasnip" },
     { import = "lazyvim.plugins.extras.coding.blink" },
-    { import = "lazyvim.plugins.extras.coding.mini-snippets" },
+    -- { import = "lazyvim.plugins.extras.coding.mini-snippets" },
     -- { import = "lazyvim.plugins.extras.coding.nvim-cmp" },
     { import = "lazyvim.plugins.extras.coding.yanky" },
     -- { import = "lazyvim.plugins.extras.ui.treesitter-context" },
